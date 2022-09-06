@@ -1,6 +1,6 @@
 package com.example.services;
 
-import com.example.beans.Livre;
+import com.example.beans.Book;
 import com.example.beans.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +35,14 @@ public class PageService {
         return response;
     }
 
-    public Page findByNumberAndBookId(int numero, Long idLivre) {
-        Page response = (Page) entityManager.createQuery("SELECT p FROM Page p WHERE p.numero =" + numero + " AND p.id_livre = " + idLivre, Page.class);
+    public Page findByNumberAndBookId(int number, Book book) {
+        Page response = (Page) entityManager.createQuery("SELECT p FROM Page p WHERE p.number =" + number + " AND p.book_id = " + book.getId(), Page.class);
         return response;
     }
 
-    public void add(Livre livre, int numero) {
-        Page l = new Page(livre, numero);
-        entityManager.persist(l);
+    public Page add(Book book, int number) {
+        Page p = new Page(book, number);
+        entityManager.persist(p);
+        return p;
     }
 }

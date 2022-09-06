@@ -11,36 +11,41 @@ public class Customer {
 
     private static final Logger log = LoggerFactory.getLogger(Customer.class);
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    //@Column(name = "name")
+    private String name;
+
+
     public Customer() {
     }
 
     public Customer(String nom) {
-        this.nom = nom;
+        this.name = nom;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     public Long getId() {
         return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Column(name = "nom")
-    private String nom;
-    public String getNom() {
-        return nom;
-    }
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString(){
         return "::: Client :::"
-             + "<br>--> Nom : " + this.getNom()
+             + "<br>--> Nom : " + this.getName()
              + "<br>---> Id : " + this.getId() + "<br><br>";
     }
 }

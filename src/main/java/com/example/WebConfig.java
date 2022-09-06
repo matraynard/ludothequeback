@@ -9,5 +9,4 @@ import org.springframework.context.annotation.Configuration;
 public class WebConfig {
 
     private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
-
 }

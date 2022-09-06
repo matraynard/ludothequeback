@@ -26,9 +26,11 @@ INSERT INTO schema1.customer (name) VALUES ('Customer 3');
 INSERT INTO schema1.customer (name) VALUES ('Customer 4');
 
 DROP TABLE IF EXISTS schema1.buy;
-CREATE TABLE schema1.buy (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1000), book_id INT REFERENCES schema1.book(id), customer_id INT REFERENCES schema1.customer(id), buyingdate DATE);
+CREATE TABLE schema1.buy (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1000), book_id INT REFERENCES schema1.book(id), customer_id INT REFERENCES schema1.customer(id), buyingnumber INT, buyingdate DATE);
 
-INSERT INTO schema1.buy (book_id, customer_id, buyingdate) VALUES (1000, 1000, '2020-07-01');
-INSERT INTO schema1.buy (book_id, customer_id, buyingdate) VALUES (1001, 1001, '2022-08-23');
-INSERT INTO schema1.buy (book_id, customer_id, buyingdate) VALUES (1002, 1003, '2021-10-02');
-INSERT INTO schema1.buy (book_id, customer_id, buyingdate) VALUES (1003, 1002, '2022-06-15');
+INSERT INTO schema1.buy (book_id, customer_id, buyingnumber, buyingdate) VALUES (1000, 1000, '2020-07-01');
+INSERT INTO schema1.buy (book_id, customer_id, buyingnumber, buyingdate) VALUES (1000, 1000, '2020-07-01');
+INSERT INTO schema1.buy (book_id, customer_id, buyingnumber, buyingdate) VALUES (1000, 1000, '2020-07-01');
+INSERT INTO schema1.buy (book_id, customer_id, buyingnumber, buyingdate) VALUES (1001, 1001, '2022-08-23');
+INSERT INTO schema1.buy (book_id, customer_id, buyingnumber, buyingdate) VALUES (1002, 1003, '2021-10-02');
+INSERT INTO schema1.buy (book_id, customer_id, buyingnumber, buyingdate) VALUES (1003, 1002, '2022-06-15');
