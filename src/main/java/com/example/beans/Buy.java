@@ -5,38 +5,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 @Entity
-@Table(name = "buying", schema = "schema1")
-@NamedQuery(name = "buying.list", query = "SELECT b FROM Buying b ORDER BY b.id")
-public class Buying {
+@NamedQuery(name = "buy.list", query = "SELECT b FROM Buy b ORDER BY b.id")
+public class Buy {
 
-    private static final Logger log = LoggerFactory.getLogger(Buying.class);
+    private static final Logger log = LoggerFactory.getLogger(Buy.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    private Book book;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Book> books;
     @ManyToOne
     private Customer customer;
-
     private ZonedDateTime buyingdate;
 
 
-    public Buying() {
+    public Buy() {
     }
 
-    public Buying(Customer customer, Book book) {
-        this.book = book;
+    public Buy(Customer customer, Set<Book> books) {
+        this.books = books;
         this.customer = customer;
     }
 
 
-    public Book getBook(){
-        return this.book;
+    public Set<Book> getBooks(){
+        return this.books;
     }
 
     public Customer getCustomer() {
@@ -48,8 +45,8 @@ public class Buying {
     }
 
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public void setCustomer(Customer customer) {

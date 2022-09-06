@@ -40,6 +40,7 @@ public class PageService {
         return response;
     }
 
+    @Transactional
     public Page add(Book book, int number) {
         Page p = new Page(book, number);
         entityManager.persist(p);

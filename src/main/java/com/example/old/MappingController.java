@@ -22,9 +22,10 @@ public class MappingController {
     }
 
     @RequestMapping("/")
-    public String defaultPage(){
-        IndexController ic = new IndexController();
-        return ic.onOpen() + "This is the index page, keep going. :|";
+    public String indexPage(){
+        /*IndexController ic = new IndexController();
+        return ic.onOpen() + "This is the index page, keep going. :|";*/
+        return "This is the index page, welcome. :|";
     }
 
     /*@GetMapping("/error")

@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Entity
-@Table(name = "customer", schema = "schema1")
 @NamedQuery(name = "customer.list", query = "SELECT c FROM Customer c ORDER BY c.id")
 public class Customer {
 

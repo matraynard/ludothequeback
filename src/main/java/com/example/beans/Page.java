@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 
 @Entity
-@Table(name="page", schema = "schema1")
 @NamedQuery(name = "page.list", query = "SELECT p FROM Page p ORDER BY p.id")
 public class Page {
 

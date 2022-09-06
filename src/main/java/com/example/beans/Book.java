@@ -3,9 +3,9 @@ package com.example.beans;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name="book", schema = "schema1")
 @NamedQuery(name = "book.list", query = "SELECT b FROM Book b ORDER BY b.id")
 public class Book {
 
@@ -17,11 +17,9 @@ public class Book {
     public Book(int price) {
         this.price = price;
     }
-
     public Book(String title) {
         this.title = title;
     }
-
     public Book(Long id){
         this.id = id;
     }
@@ -30,26 +28,30 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "price", nullable = false)
+    private int price;
+    @Column(name = "title", nullable = false)
+    private String title;
+    @ManyToMany
+    Set<Buy> buyings;
+
+
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Column(name = "price", nullable = false)
-    private int price;
     public int getPrice(){
         return  this.price;
     }
-    public void setPrice(int price){
-        this.price = price;
-    }
-
-    @Column(name = "title", nullable = false)
-    private String title;
     public String getTitle(){
         return  this.title;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setPrice(int price){
+        this.price = price;
     }
     public void setTitle(String title){
         this.title = title;
