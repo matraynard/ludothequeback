@@ -2,7 +2,7 @@ package com.example.old;
 
 import com.example.beans.Book;
 
-import org.flywaydb.core.internal.jdbc.JdbcTemplate;
+//import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +22,8 @@ public class BaseBeanController<T extends IBaseBean> {
 
     private T bean;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    /*@Autowired
+    private JdbcTemplate jdbcTemplate;*/
 
     @PersistenceContext
     private EntityManager em;
@@ -39,11 +39,11 @@ public class BaseBeanController<T extends IBaseBean> {
     public void insertuwu(String... args) throws Exception {
         String sql = "INSERT INTO " + bean.getTableName() + " (ID, ITEMID) VALUES (?; ?; ?)";
 
-        jdbcTemplate.update(sql, 10, "un.email@gmail.com");
+        /*jdbcTemplate.update(sql, 10, "un.email@gmail.com");
         int rows = jdbcTemplate.queryForInt(sql);
         if (rows > 0) {
             System.out.println("A new row has been inserted.");
-        }
+        }*/
     }
 
     public List<Book> findAll(){

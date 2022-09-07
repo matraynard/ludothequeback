@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <book id="1000" price="10" title="toto0"/>
+    <!--<book id="1000" price="10" title="toto0"/>
+    <book id="1001" price="11" title="toto1"/>-->
+    <customer id="1000" name = "customer0"/>
+    <!--<customer id="1000" name = "customer0"/>
+    <customer id="1001" name = "customer1"/>-->
+    <purchase id="1000" purchasedate="2020-07-01 12:00:00 +0000" customer_id="1000"/>
+    <!--<purchase id="1000" purchasedate="2020-07-01 12:00:00 +0000" customer_id="1000"/>
+    <purchase id="1001" purchasedate="2020-07-02 12:00:00 +0000" customer_id="1000"/>-->
+    <purchase_book book_id="1000" purchase_id="1000"/>
+    <!--<purchase_book book_id="1000" purchase_id="1000"/>
+    <purchase_book book_id="1000" purchase_id="1000"/>
+    <purchase_book book_id="1001" purchase_id="1000"/>-->
+</dataset>

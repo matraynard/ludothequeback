@@ -33,7 +33,7 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
     @ManyToMany
-    Set<Buy> buyings;
+    Set<Purchase> purchase;
 
 
     public Long getId() {
