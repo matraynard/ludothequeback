@@ -1,6 +1,6 @@
 package com.example.old;
 
-import com.example.beans.Page;
+import com.example.entity.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

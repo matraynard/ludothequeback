@@ -1,12 +1,11 @@
 package com.example.old;
 
-import com.example.beans.Book;
+import com.example.entity.Book;
 
 //import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

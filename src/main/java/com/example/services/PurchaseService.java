@@ -1,61 +1,109 @@
 package com.example.services;
 
-import com.example.beans.Book;
-import com.example.beans.Purchase;
-import com.example.beans.Customer;
+import com.example.entity.Book;
+import com.example.entity.Purchase;
+import com.example.entity.Customer;
 import com.example.repository.IPurchaseJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 @Service
 public class PurchaseService {
 
     private static final Logger log = LoggerFactory.getLogger(PurchaseService.class);
 
-    @PersistenceContext
-    EntityManager entityManager;
-
     @Autowired
-    IPurchaseJpaRepository purchaseJpaRepository;
+    IPurchaseJpaRepository repository;
 
-    public List<Purchase> list(){
-        TypedQuery<Purchase> query = entityManager.createNamedQuery("purchase.list", Purchase.class);
-        return query.getResultList();
+    @Transactional
+    public Purchase add(Instant date, Long customerId) {
+        if (date != null){
+            Customer customer = new CustomerService().findById(customerId);
+            Set<Book> books = new HashSet<Book>();
+            return add(new Purchase(customer, books, date));
+        }
+        return null;
     }
 
-    //@Transactional
-    public Purchase findById(Long id){
-        return (Purchase) entityManager.find(Purchase.class, id);
+    @Transactional
+    public Purchase add(Purchase purchase) {
+        if (purchase != null){
+            repository.save(purchase);
+            return purchase;
+        }
+        return null;
     }
 
-    public Purchase findByBookAndCustomer(Long idLivre, Long idCustomer) {
-        Customer customer = new CustomerService().findById(idCustomer);
-        Book book = new BookService().findById(idLivre);
-        //Set<Book> books = new HashSet<Book>(){{add(new BookService().findById(idL));}};
-
-
-        //return entityManager.createQuery("SELECT p FROM purchase WHERE book_id = " + book.getId() + " AND customer_id = " + customer.getId(), Purchase.class).getSingleResult();
-        return purchaseJpaRepository.findByCustomerAndBook(idLivre, idCustomer).get(0);
-        /*return entityManager
-                .createQuery("select p from Purchase p join p.books bo where p.customer.id =:customerId and bo.id =:bookId", Purchase.class)
-                .getSingleResult();*/
-
+    @Transactional
+    public Purchase delete(Long id) {
+        return delete(findById(id));
     }
 
-    public List<Purchase> findByCustomer(Long idCustomer){
-        //return entityManager.createQuery("SELECT p FROM purchase WHERE customer_id = " + customer.getId(), Purchase.class).getResultList();
-        return purchaseJpaRepository.findByCustomer(idCustomer);
+    @Transactional
+    public Purchase delete(Purchase purchase) {
+        if (purchase != null){
+            repository.delete(purchase);
+            return purchase;
+        }
+        return null;
     }
 
-    public Purchase add(Purchase purchase){
-        entityManager.persist(purchase);
-        return purchase; //TODO vérifier si l'id est renseigné automatiquement
+    public List<Purchase> findAll() {
+        return  repository.findAll(Sort.by(Sort.Direction.ASC, "purchasedate"));
+    }
+
+    /**/public List<Purchase> findByCustomerAndBook(Long idCustomer, Long idLivre) {
+        List<Purchase> foundPurchases = repository.findByCustomerAndBook(idLivre, idCustomer);
+        foundPurchases.sort(Comparator.comparing(Purchase::getPurchasedate));
+        return foundPurchases;
+    }
+
+    public List<Purchase> findByCustomer(Customer customer) {
+        return customer != null
+                ? findByCustomer(customer.getId())
+                : null;
+    }
+
+    public List<Purchase> findByCustomer(Long customerId) {
+        List<Purchase> foundPurchases = repository.findByCustomer(customerId);
+        foundPurchases.sort(Comparator.comparing(Purchase::getPurchasedate));
+        return foundPurchases;
+    }
+
+    public List<Purchase> findByDate(Instant date) {
+        if (date != null){
+            List<Purchase> foundPurchases = repository.findByDate(date);
+            foundPurchases.sort(Comparator.comparing(Purchase::getPurchasedate));
+            return foundPurchases;
+        }
+        return null;
+    }
+
+    public Purchase findById(Long id) {
+        return repository.findById(id).get();
+    }
+
+    @Transactional
+    public Purchase update(Long purchaseId, Long customerId) {
+        Purchase purchase = findById(purchaseId);
+        Customer customer = new CustomerService().findById(customerId);
+        if (purchase != null && customer != null){
+            purchase.setCustomer(customer);
+            return update(purchase);
+        }
+        return null;
+    }
+
+    @Transactional
+    public Purchase update(Purchase purchase) {
+        repository.save(purchase);
+        return purchase;
     }
 }

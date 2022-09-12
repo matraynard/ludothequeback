@@ -1,4 +1,4 @@
-package com.example.beans;
+package com.example.entity;
 
 import javax.persistence.*;
 import org.slf4j.Logger;
@@ -16,23 +16,32 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "purchase_book",
                joinColumns = @JoinColumn(name = "book_id"),
                inverseJoinColumns = @JoinColumn(name = "purchase_id"))
     private Set<Book> books;
     //private List<Book> books = new ArrayList<>(); //cette forme est-elle aussi valide ?
+
     @ManyToOne
     private Customer customer;
+
     private Instant purchasedate;
 
 
     public Purchase() {
     }
 
-    public Purchase(Customer customer, Set<Book> books) {
+    public Purchase(Customer customer, Set<Book> books, Instant purchasedate) {
         this.books = books;
         this.customer = customer;
+        this.purchasedate = purchasedate;
+    }
+
+    public Purchase(Customer customer, Instant purchasedate) {
+        this.customer = customer;
+        this.purchasedate = purchasedate;
     }
 
 
@@ -48,6 +57,10 @@ public class Purchase {
         return id;
     }
 
+    public Instant getPurchasedate() {
+        return purchasedate;
+    }
+
 
     public void setBooks(Set<Book> books) {
         this.books = books;
@@ -55,6 +68,10 @@ public class Purchase {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void setPurchasedate(Instant purchasedate) {
+        this.purchasedate = purchasedate;
     }
 
 
