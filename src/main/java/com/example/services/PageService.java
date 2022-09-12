@@ -4,10 +4,13 @@ import com.example.entity.Page;
 import com.example.repository.IPageJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Comparator;
 import java.util.List;
 
@@ -16,6 +19,10 @@ public class PageService {
 
     private static final Logger log = LoggerFactory.getLogger(PageService.class);
 
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @Autowired
     IPageJpaRepository repository;
 
     @Transactional

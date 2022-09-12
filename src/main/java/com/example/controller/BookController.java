@@ -34,7 +34,7 @@ public class BookController {
         return bookService.findById(id);
     }
 
-    @GetMapping(path = "/{title}")
+    @GetMapping(path = "/t/{title}")
     public List<Book> findByTitle(@PathVariable String title){
         return bookService.findByTitle(title);
     }

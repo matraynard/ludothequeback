@@ -4,6 +4,7 @@ import com.example.entity.Book;
 import com.example.repository.IBookJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ public class BookService {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Autowired
     IBookJpaRepository repository;
 
     @Transactional

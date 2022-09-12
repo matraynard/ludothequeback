@@ -34,7 +34,7 @@ public class CustomerController {
         return customerService.findById(id);
     }
 
-    @GetMapping(path = "/byname/{name}")
+    @GetMapping(path = "/n/{name}")
     public String findByName(@PathVariable String name) {
         return customerService.findByName(name).toString();
     }

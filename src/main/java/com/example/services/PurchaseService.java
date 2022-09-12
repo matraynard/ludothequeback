@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.time.Instant;
 import java.util.*;
 
@@ -18,6 +20,9 @@ import java.util.*;
 public class PurchaseService {
 
     private static final Logger log = LoggerFactory.getLogger(PurchaseService.class);
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Autowired
     IPurchaseJpaRepository repository;

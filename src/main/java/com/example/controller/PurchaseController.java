@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -36,19 +38,11 @@ public class PurchaseController {
         return purchaseService.findById(id);
     }
 
-    /*@GetMapping(path = "/customer/{id}/book/{id}")
-    public List<Purchase> findByCustomerAndBook(@PathVariable Long customerId, @PathVariable Long BookId){
-        return purchaseService.findByCustomerAndBook(customerId, BookId);
-    }
-
-    @GetMapping(path = "/customer/{id}")
-    public List<Purchase> findByCustomer(@PathVariable Long customerId){
-        return purchaseService.findByCustomer(customerId);
-    }*/
-
-    @GetMapping(path = "/date/{id}")
-    public List<Purchase> findByDate(@PathVariable Instant date){
-        return purchaseService.findByDate(date);
+    @GetMapping(path = "/date/{date}")
+    public List<Purchase> findByDate(@PathVariable String date){
+        LocalDate lDate = LocalDate.parse(date);
+        Instant i = lDate.atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
+        return purchaseService.findByDate(i);
     }
 
     @GetMapping(path = "/hello")
@@ -56,11 +50,9 @@ public class PurchaseController {
         return "C'est la page de hello world. Retourne travailler maintenant.";
     }
 
-    //-----
-
     @PostMapping(path = "/{id}")
-    public Purchase save(@PathVariable Long customerId, Instant date){
-        Purchase purchase = new Purchase(new CustomerService().findById(customerId), date);
+    public Purchase save(@PathVariable Long customerId, String date){
+        Purchase purchase = new Purchase(new CustomerService().findById(customerId), Instant.parse(date));
         purchaseService.add(purchase);
         return purchase;
     }
