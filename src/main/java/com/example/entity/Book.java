@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.util.Comparator;
 
 @Entity
 @NamedQuery(name = "book.list", query = "SELECT b FROM Book b ORDER BY b.id") //redondant avec findAll du BookJpaRepo
@@ -23,6 +22,9 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
 
+    /*@Transient
+    private Long pagecount;*/
+
 
     public Book() {
     }
@@ -36,6 +38,10 @@ public class Book {
         return id;
     }
 
+    /*public Long getPagecount() {
+        return pagecount;
+    }*/
+
     public int getPrice(){
         return  this.price;
     }
@@ -48,6 +54,10 @@ public class Book {
     public void setId(Long id) {
         this.id = id;
     }
+
+    /*public void setPagecount(Long pagecount) {
+        this.pagecount = pagecount;
+    }*/
 
     public void setPrice(int price){
         this.price = price;

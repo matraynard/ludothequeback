@@ -53,13 +53,27 @@ public class PageService {
         return null;
     }
 
+    @Transactional
+    public Page delete(Long bookId, int pageNumber) {
+        return delete(findByNumberAndBookId(pageNumber, bookId));
+    }
+
     public List<Page> findAll() {
         return  repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
     }
 
+    public List<Page> findAfterNumber(Long bookId, int number) {
+        return repository.findAfterNumber(bookId, number);
+    }
+
     public List<Page> findAllOfBookId(Long bookId) {
-        List<Page> foundPages = repository.findAllOfBookId(bookId);
-        return foundPages;
+        return repository.findAllOfBookId(bookId);
+    }
+
+    public List<Page> findByFirstWord(String firstWord) {
+        return firstWord != null
+                ? repository.findByFirstWord(firstWord)
+                : null;
     }
 
     public Page findById(Long id) {
@@ -72,14 +86,18 @@ public class PageService {
         return foundPages;
     }
 
-    public List<Page> findByFirstWord(String firstWord) {
-        return firstWord != null
-                ? repository.findByFirstWord(firstWord)
-                : null;
-    }
-
     public Page findByNumberAndBookId(int number, Long bookIid) {
         return repository.findByNumberAndBookId(number, bookIid);
+    }
+
+    public Page findLastOfBookId(Long bookId) {
+        Page page = repository.findLastOfBookId(bookId);
+        return page;
+    }
+
+    public int findNumberOfPagesInBookId(Long bookId) {
+        int numberOfPages = repository.findNumberOfPagesByBookId(bookId);
+        return numberOfPages;
     }
 
     @Transactional

@@ -1,6 +1,8 @@
 package com.example.services;
 
+import com.example.bean.BookBean;
 import com.example.entity.Book;
+import com.example.entity.Page;
 import com.example.repository.IBookJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -57,12 +60,26 @@ public class BookService {
 
     //identique à public List<Book> list()
     public List<Book> findAll() {
-        return  repository.findAll(Sort.by(Sort.Direction.ASC, "title"));
+        List<Book> books = repository.findAll(Sort.by(Sort.Direction.ASC, "title"));
+        return books;
+    }
+
+    public List<BookBean> findAllComplete() {
+        List<Book> books = repository.findAll(Sort.by(Sort.Direction.ASC, "title"));
+        List<BookBean> bookBeans = new ArrayList<>();
+        books.stream().forEach(book -> bookBeans.add(new BookBean(book, (repository.findNumberOfPagesByBookId(book.getId())))));
+        return bookBeans;
     }
 
     public Book findById(Long id) {
         return repository.findById(id).get();
-        //return entityManager.find(Book.class, id);
+    }
+
+    public BookBean findByIdCompleteBook(Long id){
+        return repository.findBookBeanById(id);
+        /*Book book = findById(id);
+        book.setPagecount(findNumberOfPagesByBookId(id));
+        return book;*/
     }
 
     public List<Book> findByTitle(String title) {
@@ -72,6 +89,10 @@ public class BookService {
             return foundBooks;
         }
         return null;
+    }
+
+    public int findNumberOfPagesByBookId(Long id){
+        return 0;
     }
 
     //identique à public List<Book> findAll()

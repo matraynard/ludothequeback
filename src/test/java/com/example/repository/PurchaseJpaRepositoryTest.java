@@ -22,9 +22,9 @@ class PurchaseJpaRepositoryTest { //TODO run ici pour lancer les tests
     @Autowired
     IPurchaseJpaRepository repository;
 
-    /*@Test
+    @Test
     @DatabaseSetup("/database/setup/purchase.xml")
     void findByCustomerAndBook() {
         repository.findByCustomerAndBook(1L, 1L);
-    }*/
+    }
 }

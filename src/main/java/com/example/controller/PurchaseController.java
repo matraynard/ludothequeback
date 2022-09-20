@@ -21,6 +21,8 @@ public class PurchaseController {
 
     @Autowired
     private PurchaseService purchaseService;
+    @Autowired
+    private CustomerService customerService;
 
     @DeleteMapping(path = "/{id}")
     public String delete(@PathVariable Long id){
@@ -50,9 +52,11 @@ public class PurchaseController {
         return "C'est la page de hello world. Retourne travailler maintenant.";
     }
 
-    @PostMapping(path = "/{id}")
-    public Purchase save(@PathVariable Long customerId, String date){
-        Purchase purchase = new Purchase(new CustomerService().findById(customerId), Instant.parse(date));
+    @PostMapping(path = "/customer/{customerId}/date/{date}")
+    public Purchase save(@PathVariable Long customerId, @PathVariable String date){
+        LocalDate lDate = LocalDate.parse(date);
+        Instant i = lDate.atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
+        Purchase purchase = new Purchase(customerService.findById(customerId), i);
         purchaseService.add(purchase);
         return purchase;
     }
