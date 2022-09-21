@@ -22,7 +22,7 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
 
-    /*@Transient
+    /*@Transient //TODO permet d'indiquer que ce champ de l'entity n'est pas mappé à une colonne de la table en db; cette méthode est moins propre que d'avoir un bean dédié
     private Long pagecount;*/
 
 

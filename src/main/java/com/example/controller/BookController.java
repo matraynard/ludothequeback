@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.bean.BookBean;
+import com.example.bean.BookComplete;
 import com.example.entity.Book;
 import com.example.entity.Page;
 import com.example.services.BookService;
@@ -48,7 +48,7 @@ public class BookController {
     }
 
     @GetMapping(path = "list/complete")
-    public List<BookBean> findAllComplete(){
+    public List<BookComplete> findAllComplete(){
         return bookService.findAllComplete();
     }
 
@@ -58,7 +58,7 @@ public class BookController {
     }
 
     @GetMapping(path = "{id}/complete")
-    public BookBean findByIdCompleteBook(@PathVariable Long id){
+    public BookComplete findByIdCompleteBook(@PathVariable Long id){
         return bookService.findByIdCompleteBook(id);
     }
 

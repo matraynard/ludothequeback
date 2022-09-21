@@ -1,8 +1,7 @@
 package com.example.services;
 
-import com.example.bean.BookBean;
+import com.example.bean.BookComplete;
 import com.example.entity.Book;
-import com.example.entity.Page;
 import com.example.repository.IBookJpaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,22 +63,19 @@ public class BookService {
         return books;
     }
 
-    public List<BookBean> findAllComplete() {
+    public List<BookComplete> findAllComplete() {
         List<Book> books = repository.findAll(Sort.by(Sort.Direction.ASC, "title"));
-        List<BookBean> bookBeans = new ArrayList<>();
-        books.stream().forEach(book -> bookBeans.add(new BookBean(book, (repository.findNumberOfPagesByBookId(book.getId())))));
-        return bookBeans;
+        List<BookComplete> bookCompletes = new ArrayList<>();
+        books.stream().forEach(book -> bookCompletes.add(new BookComplete(book, (repository.findNumberOfPagesByBookId(book.getId())))));
+        return bookCompletes;
     }
 
     public Book findById(Long id) {
         return repository.findById(id).get();
     }
 
-    public BookBean findByIdCompleteBook(Long id){
-        return repository.findBookBeanById(id);
-        /*Book book = findById(id);
-        book.setPagecount(findNumberOfPagesByBookId(id));
-        return book;*/
+    public BookComplete findByIdCompleteBook(Long id){
+        return repository.findBookCompleteById(id);
     }
 
     public List<Book> findByTitle(String title) {
@@ -94,11 +90,6 @@ public class BookService {
     public int findNumberOfPagesByBookId(Long id){
         return 0;
     }
-
-    //identique à public List<Book> findAll()
-    /*public List<Book> list() {
-        return  entityManager.createNamedQuery("book.list", Book.class).getResultList();
-    }*/
 
     @Transactional //TODO ne fonctionnait pas quand j'avais pas aussi cette annot' ici
     public Book update(Long id, String newTitle) {

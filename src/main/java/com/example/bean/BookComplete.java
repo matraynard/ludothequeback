@@ -2,12 +2,12 @@ package com.example.bean;
 
 import com.example.entity.Book;
 
-public class BookBean {
+public class BookComplete {
 
     private Book book;
     private Long pageCount;
 
-    public BookBean(Book book, Long pageCount){
+    public BookComplete(Book book, Long pageCount){
         this.book = book;
         this.pageCount = pageCount;
     }

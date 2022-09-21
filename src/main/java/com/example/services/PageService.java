@@ -59,7 +59,7 @@ public class PageService {
     }
 
     public List<Page> findAll() {
-        return  repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        return  repository.findAll(Sort.by(Sort.Direction.ASC, "number"));
     }
 
     public List<Page> findAfterNumber(Long bookId, int number) {
