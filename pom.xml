@@ -11,9 +11,13 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.example</groupId>
-	<artifactId>demoback</artifactId>
+	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>demo</name>
+	<description>Un projet de démo qui simule une librairie / bibliothèque</description>
 
+
+	<!-- PROPERTIES -->
 	<properties>
 		<java.version>17</java.version>
 		<mainClassPackage>com.example.demo</mainClassPackage>
@@ -28,76 +32,125 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<name>demoback</name>
-	<description>Demo project for Spring Boot</description>
 
+	<!-- DEPENDENCIES -->
 	<dependencies>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>2.1.214</version>
-		</dependency>
-
+		<!-- Flyway is a version control application to evolve your Database
+		schema easily and reliably across all your instances -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
+		<!-- pour simuler une bdd lors des tests,
+		associé à test/resources/database.setup/purchase.xml -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.1.214</version>
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
+		<!-- pour utiliser les requêtes http dans les controllers, il me semble -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<!--<scope>test</scope>-->
 		</dependency>
 
+		<!-- utilisé pour les tests unitaires -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>RELEASE</version>
+			<!--<version>4.4</version>-->
+			<scope>test</scope>
+		</dependency>
+
+		<!-- pour utiliser la bdd postgre -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- ? pour utiliser Spring, mais à quoi ça sert très spécifiquement ?
+		à importer des librairies de base de Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<!-- des librairies de base d'utilisation de JPA, Java Persistence API -->
+		<!-- Spring Data JPA aims to significantly improve the implementation
+		of data access layers by reducing the effort to the amount that's
+		actually needed. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- des librairies de base d'utilisation de JDBC, Java EE
+		Database Connectivity -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+
+		<!-- des librairies de base pour l'utilisation du module Security-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- des librairies de base pour l'environnement de test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- des librairies de base pour l'utilisation de thymeleaf,
+		l'environnement front / pas utilisé en ce moment, le front est
+		dans le projet demofront -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- des librairies de base pour l'utilisation de contenu web.
+		quelle différence avec la dep httpclient ? -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- sert à quoi ?
+		Spring Context provides access to configured objects like a
+		registry (a context). It inherits its features from Spring
+		Beans and adds support for internationalization, event
+		propagation, resource loading, and the transparent creation
+		of contexts. -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>5.3.22</version>
 		</dependency>
 
-		<!--<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+		<!-- des librairies pour la sécurité, environnement de test
+		 quelle différence avec spring-boot-starter-security ?
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>-->
 
+		<!-- dbUnit is a JUnit extension (also usable from Ant and Maven)
+		targeted for database-driven projects that, among other things,
+		puts your database into a known state between test runs. This is
+		an excellent way to avoid the myriad of problems that can occur
+		when one test case corrupts the database and causes subsequent
+		tests to fail or exacerbate the damage. -->
 		<dependency>
 			<groupId>org.dbunit</groupId>
 			<artifactId>dbunit</artifactId>
@@ -105,6 +158,10 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Spring DBUnit provides integration between the Spring testing
+		framework and the popular DBUnit project. It allows you to setup
+		and teardown database tables using simple annotations as well as
+		checking expected table contents once a test completes. -->
 		<dependency>
 			<groupId>com.github.springtestdbunit</groupId>
 			<artifactId>spring-test-dbunit</artifactId>
@@ -112,52 +169,58 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- TestNG is a testing framework inspired from JUnit and NUnit
+		but introducing some new functionalities that make it more
+		powerful and easier to use. It supports test configured by
+		annotations, data-driven testing, parametric tests, etc. -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>RELEASE</version>
+			<version>7.6.1</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!--<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-			<scope>test</scope>
-		</dependency>-->
 	</dependencies>
 
+
+	<!-- PLUGINS -->
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${project.parent.version}</version>
-			</plugin>
+		<pluginManagement>
+			<plugins>
+				<!-- sert à ? -->
+				<plugin>
+					<groupId>org.flywaydb</groupId>
+					<artifactId>flyway-maven-plugin</artifactId>
+					<version>9.2.2</version>
+					<configuration>
+						<user>root</user>
+						<password>root</password>
+						<schemas>
+							<schema>schema1</schema>
+						</schemas>
+					</configuration>
+				</plugin>
 
-			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<version>9.2.2</version>
-				<configuration>
-					<user>root</user>
-					<password>root</password>
-					<schemas>
-						<schema>schema1</schema>
-					</schemas>
-				</configuration>
-			</plugin>
+				<!-- sert à ? -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${project.parent.version}</version>
+				</plugin>
 
-			<!--<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.8.6</version>
-			</plugin>-->
-		</plugins>
+				<!-- sert à ?-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.3.1</version>
+					<!--<configuration>
+						<encoding>UTF-8</encoding>
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>sql</nonFilteredFileExtension>
+							<nonFilteredFileExtension>swf</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>-->
+            	</plugin><!---->
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

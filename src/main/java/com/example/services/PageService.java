@@ -70,6 +70,7 @@ public class PageService {
         return repository.findAllOfBookId(bookId);
     }
 
+
     public List<Page> findByFirstWord(String firstWord) {
         return firstWord != null
                 ? repository.findByFirstWord(firstWord)

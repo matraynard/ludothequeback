@@ -5,17 +5,28 @@ import com.example.entity.Book;
 import com.example.entity.Page;
 import com.example.services.BookService;
 import com.example.services.PageService;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5173/")
 @RequestMapping("/book/")
-public class BookController {
+public class BookController /*extends SecurityController*/ {
 
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
@@ -53,7 +64,19 @@ public class BookController {
     }
 
     @GetMapping(path = "{id}")
-    public Book findById(@PathVariable Long id){
+    public Book findById(@PathVariable Long id) throws IOException {
+        Book book = bookService.findById(id);
+        try{
+            ObjectMapper om = new ObjectMapper();
+            om.writeValue(new File("target/book.json"), book); //also works with .txt
+
+            String filename = ZonedDateTime.now(ZoneId.of("Europe/Paris"))
+                              .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                              + " BookController findById" + ".json";
+            om.writeValue(new File("target/" + filename.trim()), book); //this one never work, idk why
+        }
+        catch(IOException ie){}
+
         return bookService.findById(id);
     }
 
@@ -116,10 +139,26 @@ public class BookController {
         return book;
     }
 
+    @PostMapping(path = "{title}/{price}/complete")
+    public BookComplete saveComplete(@PathVariable String title, @PathVariable int price){
+        BookComplete bookComplete = null;
+        if (title != null && !title.isEmpty() && price > 0){
+            Book book = new Book(title, price);
+            bookService.add(book);
+            bookComplete = new BookComplete(book, 0L);
+        }
+        return bookComplete;
+    }
+
     /* -- PutMapping -- */
 
     @PutMapping(path = "{id}/{newTitle}")
     public Book update(@PathVariable Long id, @PathVariable String newTitle){
         return bookService.update(id, newTitle);
+    }
+
+    @PutMapping(path = "{id}/{newTitle}/complete")
+    public BookComplete updateComplete(@PathVariable Long id, @PathVariable String newTitle){
+        return bookService.updateComplete(id, newTitle);
     }
 }

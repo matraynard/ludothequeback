@@ -101,6 +101,19 @@ public class BookService {
         return book;
     }
 
+    @Transactional //TODO ne fonctionnait pas quand j'avais pas aussi cette annot' ici
+    public BookComplete updateComplete(Long id, String newTitle) {
+        Book book = findById(id);
+        if (newTitle != null && book != null){
+            book.setTitle(newTitle);
+            //books.stream().forEach(book -> bookCompletes.add(new BookComplete(book, (repository.findNumberOfPagesByBookId(book.getId())))));
+            book = update(book);
+
+            return new BookComplete(book, (repository.findNumberOfPagesByBookId(book.getId())));
+        }
+        return null;
+    }
+
     @Transactional
     public Book update(Book book) {
         repository.save(book);

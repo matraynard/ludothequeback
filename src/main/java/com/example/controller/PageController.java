@@ -7,13 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5173/")
+@CrossOrigin(origins = "http://127.0.0.1:5173/", allowCredentials = "true")
 @RequestMapping("/page/")
-public class PageController {
+public class PageController /*extends SecurityController*/ {
 
     private static final Logger log = LoggerFactory.getLogger(PageController.class);
 
@@ -43,7 +42,7 @@ public class PageController {
             pagesAfter.stream().forEach(p -> p.setNumber(p.getNumber() - 1));
             pagesAfter.stream().forEach(p -> pageService.update(p));
         }
-        return "La page " + page.getNumber() + " du livre " + page.getBook().getTitle() + "a été supprimée.";
+        return "La page " + page.getNumber() + " du livre " + page.getBook().getTitle() + " a été supprimée.";
     }
 
     /* -- GetMapping -- */
