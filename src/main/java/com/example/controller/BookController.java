@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5173/")
 @RequestMapping("/book/")
-public class BookController /*extends SecurityController*/ {
+public class BookController {
 
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
 

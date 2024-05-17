@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5173/")
-@RequestMapping("/customer")
+@RequestMapping("/customer/")
 public class CustomerController {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
@@ -19,40 +19,40 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "{id}")
     public String delete(@PathVariable Long id){
         Customer customer = customerService.delete(id);
         return "Le client " + customer.getName() + "a été supprimé.";
     }
 
-    @GetMapping(path = "/list")
+    @GetMapping(path = "list")
     public List<Customer> findAll(){
         return customerService.findAll();
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "{id}")
     public Customer findById(@PathVariable Long id){
         return customerService.findById(id);
     }
 
-    @GetMapping(path = "/n/{name}")
+    @GetMapping(path = "n/{name}")
     public String findByName(@PathVariable String name) {
         return customerService.findByName(name).toString();
     }
 
-    @GetMapping(path = "/hello")
+    @GetMapping(path = "hello")
     public String hello(){
         return "C'est la page de hello world. Retourne travailler maintenant.";
     }
 
-    @PostMapping(path = "/{name}")
+    @PostMapping(path = "{name}")
     public Customer save(@PathVariable String name){
         Customer customer = new Customer(name);
         customerService.add(customer);
         return customer;
     }
 
-    @PutMapping(path = "/{id}/{newName}")
+    @PutMapping(path = "{id}/{newName}")
     public Customer update(@PathVariable Long id, @PathVariable String newName){
         return customerService.update(id, newName);
     }

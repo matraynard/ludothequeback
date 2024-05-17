@@ -20,6 +20,6 @@ public interface IBookJpaRepository extends JpaRepository<Book, Long> {
     @Query(value = "select new com.example.bean.BookComplete(b, count(b)) from Book b where b.id =:bookId group by b.id")
     public BookComplete findBookCompleteById(Long bookId);
 
-    /*@Query(value = "select b from Book b order by b.title")
-    public List<Book> findAll();*/
+    @Query(value = "select b from Book b order by b.title")
+    public List<Book> findAll();/**/ //redondant avec @NamedQuery(name = "book.list" de l'entity Book, soit je commente ici, soit je commente la namedQuery de l'entity
 }

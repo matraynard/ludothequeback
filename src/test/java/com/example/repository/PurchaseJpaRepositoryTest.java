@@ -25,6 +25,6 @@ class PurchaseJpaRepositoryTest { //TODO run ici pour lancer les tests
     @Test
     @DatabaseSetup("/database/setup/purchase.xml")
     void findByCustomerAndBook() {
-        repository.findByCustomerAndBook(1L, 1L);
+        repository.findByCustomerAndArticle(1L, 1L);
     }
 }

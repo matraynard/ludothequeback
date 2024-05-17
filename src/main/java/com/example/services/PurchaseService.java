@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.entity.Article;
 import com.example.entity.Book;
 import com.example.entity.Purchase;
 import com.example.entity.Customer;
@@ -28,17 +29,17 @@ public class PurchaseService {
     IPurchaseJpaRepository repository;
 
     @Transactional
-    public Purchase add(Instant date, Long customerId) {
+    public Purchase ceateNewbasket(Instant date, Long customerId) {
         if (date != null){
             Customer customer = new CustomerService().findById(customerId);
-            Set<Book> books = new HashSet<Book>();
-            return add(new Purchase(customer, books, date));
+            List<Article> articles = new ArrayList<Article>();
+            return ceateNewbasket(new Purchase(customer, articles, date));
         }
         return null;
     }
 
     @Transactional
-    public Purchase add(Purchase purchase) {
+    public Purchase ceateNewbasket(Purchase purchase) {
         if (purchase != null){
             repository.save(purchase);
             return purchase;
@@ -61,12 +62,12 @@ public class PurchaseService {
     }
 
     public List<Purchase> findAll() {
-        return  repository.findAll(Sort.by(Sort.Direction.ASC, "purchasedate"));
+        return  repository.findAll(Sort.by(Sort.Direction.ASC, "purchaseCreationDate"));
     }
 
     /**/public List<Purchase> findByCustomerAndBook(Long idCustomer, Long idLivre) {
-        List<Purchase> foundPurchases = repository.findByCustomerAndBook(idLivre, idCustomer);
-        foundPurchases.sort(Comparator.comparing(Purchase::getPurchasedate));
+        List<Purchase> foundPurchases = repository.findByCustomerAndArticle(idLivre, idCustomer);
+        foundPurchases.sort(Comparator.comparing(Purchase::getPurchaseCreationDate));
         return foundPurchases;
     }
 
@@ -78,14 +79,14 @@ public class PurchaseService {
 
     public List<Purchase> findByCustomer(Long customerId) {
         List<Purchase> foundPurchases = repository.findByCustomer(customerId);
-        foundPurchases.sort(Comparator.comparing(Purchase::getPurchasedate));
+        foundPurchases.sort(Comparator.comparing(Purchase::getPurchaseCreationDate));
         return foundPurchases;
     }
 
-    public List<Purchase> findByDate(Instant date) {
+    public List<Purchase> findByCreationDate(Instant date) {
         if (date != null){
-            List<Purchase> foundPurchases = repository.findByDate(date);
-            foundPurchases.sort(Comparator.comparing(Purchase::getPurchasedate));
+            List<Purchase> foundPurchases = repository.findByCreationDate(date);
+            foundPurchases.sort(Comparator.comparing(Purchase::getPurchaseCreationDate));
             return foundPurchases;
         }
         return null;
@@ -96,18 +97,18 @@ public class PurchaseService {
     }
 
     @Transactional
-    public Purchase update(Long purchaseId, Long customerId) {
+    public Purchase setCustomer(Long purchaseId, Long customerId) {
         Purchase purchase = findById(purchaseId);
         Customer customer = new CustomerService().findById(customerId);
         if (purchase != null && customer != null){
             purchase.setCustomer(customer);
-            return update(purchase);
+            return saveCustomer(purchase);
         }
         return null;
     }
 
     @Transactional
-    public Purchase update(Purchase purchase) {
+    public Purchase saveCustomer(Purchase purchase) {
         repository.save(purchase);
         return purchase;
     }

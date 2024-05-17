@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <book id="1000" price="10" title="toto0"/>
-    <!--<book id="1000" price="10" title="toto0"/>
-    <book id="1001" price="11" title="toto1"/>-->
-    <customer id="1000" name = "customer0"/>
-    <!--<customer id="1000" name = "customer0"/>
-    <customer id="1001" name = "customer1"/>-->
-    <purchase id="1000" purchasedate="2020-07-01 12:00:00 +0000" customer_id="1000"/>
-    <!--<purchase id="1000" purchasedate="2020-07-01 12:00:00 +0000" customer_id="1000"/>
-    <purchase id="1001" purchasedate="2020-07-02 12:00:00 +0000" customer_id="1000"/>-->
-    <purchase_book book_id="1000" purchase_id="1000"/>
+    <book id="1001" price="15" title="Un livre à 15€ avec 1 page" reference_id="7000"/>
+    <book id="1002" price="18" title="Un livre à 18€ avec 0 page" reference_id="7001"/>
+    <book id="1003" price="20" title="Un livre à 20€ avec 5 pages" reference_id="7002"/>
+    <book id="1004" price="14" title="Un livre à 14€" reference_id="7003"/>
+    <!-- -->
+
+    <game id="3000" price="55" title="Un jeu à 55€" reference_id="7004"/>
+    <game id="3001" price="58" title="Un jeu à 58€" reference_id="7005"/>
+    <game id="3002" price="70" title="Un jeu cher" reference_id="7006"/>
+    <game id="3003" price="54" title="Un jeu à 54€" reference_id="7007"/>
+    <!-- -->
+
+    <customer id="4000" name = "Customer 0"/>
+    <customer id="4001" name = "Customer 1"/>
+    <customer id="4002" name = "Customer 2"/>
+    <customer id="4003" name = "Customer 3"/>
+    <!-- -->
+
+    <purchase id="5000" customer_id="4000" purchase_creationDate="2020-06-29 12:00:00 +0000" purchase_validationDate="2020-06-30 12:00:00 +0000"/>
+    <purchase id="5001" customer_id="4000" purchase_creationDate="2020-07-01 12:00:00 +0000" purchase_validationDate="2020-07-01 12:00:00 +0000"/>
+    <purchase id="5002" customer_id="4000" purchase_creationDate="2020-07-01 12:00:00 +0000"/>
+    <purchase id="5003" customer_id="4001" purchase_creationDate="2022-08-23 12:00:00 +0000"/>
+    <purchase id="5004" customer_id="4002" purchase_creationDate="2021-10-02 12:00:00 +0000"/>
+    <purchase id="5005" customer_id="4003" purchase_creationDate="2022-06-15 12:00:00 +0000" purchase_validationDate="2022-06-16 12:00:00 +0000"/>
+    <!-- -->
+
     <!--<purchase_book book_id="1000" purchase_id="1000"/>
+    <purchase_book book_id="1000" purchase_id="1000"/>
     <purchase_book book_id="1000" purchase_id="1000"/>
     <purchase_book book_id="1001" purchase_id="1000"/>-->
 </dataset>

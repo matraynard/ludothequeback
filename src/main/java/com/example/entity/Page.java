@@ -10,20 +10,21 @@ public class Page {
 
     private static final Logger log = LoggerFactory.getLogger(Page.class);
 
+    // ------------- fields -------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    private Book book;
-
-    //@Column(name = "number", nullable = false)
     private int number;
 
     private String firstword;
 
+    // ------------- relationships -------------
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="idbook", nullable = false)
+    private Book book;
 
+    // ------------- constructors -------------
     public Page() {
     }
     public Page(Book book, int number) {
@@ -31,7 +32,7 @@ public class Page {
         this.number = number;
     }
 
-
+    // ------------- getters -------------
     public Book getBook(){
         return  this.book;
     }
@@ -48,7 +49,7 @@ public class Page {
         return  this.number;
     }
 
-
+    // ------------- setters -------------
     public void setBook(Book book){
         this.book = book;
     }
@@ -65,7 +66,7 @@ public class Page {
         this.number = number;
     }
 
-
+    // ------------- others -------------
     @Override
     public String toString(){
         //return "Elément de ABSTRACTITEM_B : id = " + id + ", itemId = " + book;

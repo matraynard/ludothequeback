@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@CrossOrigin(origins = "http://127.0.0.1:5173/")
+@RestController //nécessaire pour que ça fonctionne, être considéré comme un controller, sinon le code sécu peut être dans un autre controller
+@CrossOrigin(origins = "http://127.0.0.1:5173/") //pas obligatoire pour la partie sécu
 @RequestMapping("/version/")
 public class SecurityController {
 
@@ -20,8 +20,8 @@ public class SecurityController {
 
     @GetMapping(path = "")
     public String getVersion(){
-        return "0.0.9-SNAPSHOT";
-    }
+        return "0.0.11-SNAPSHOT";
+    } //later trouver une manière de récup' l'info depuis le pom
 
     /* -- Security config -- */
     @Bean

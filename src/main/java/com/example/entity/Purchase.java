@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,40 +14,44 @@ public class Purchase {
 
     private static final Logger log = LoggerFactory.getLogger(Purchase.class);
 
+    // ------------- fields -------------
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Instant creationDate;
+    private Instant validationDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "purchase_book",
-               joinColumns = @JoinColumn(name = "book_id"),
-               inverseJoinColumns = @JoinColumn(name = "purchase_id"))
-    private Set<Book> books;
-    //private List<Book> books = new ArrayList<>(); //cette forme est-elle aussi valide ?
-
-    @ManyToOne
+    // ------------- relationships -------------
+    @ManyToOne//(mappedBy = "customer")
+    @JoinColumn(name="idCustomer", nullable = false) //is this necessary ?
     private Customer customer;
 
-    private Instant purchasedate;
+    @OneToMany/*(fetch = FetchType.EAGER)
+    @JoinTable(name = "article",
+               joinColumns = @JoinColumn(name = "id"),
+               inverseJoinColumns = @JoinColumn(name = "purchase_id"))*/
+    private List<Article> articles;
+    //private List<Book> books = new ArrayList<>(); //cette forme est-elle aussi valide ?
 
 
+    // ------------- constructors -------------
     public Purchase() {
     }
 
-    public Purchase(Customer customer, Set<Book> books, Instant purchasedate) {
-        this.books = books;
+    public Purchase(Customer customer, List<Article> articles, Instant creationDate) {
+        this.articles = articles;
         this.customer = customer;
-        this.purchasedate = purchasedate;
+        this.creationDate = creationDate;
     }
 
-    public Purchase(Customer customer, Instant purchasedate) {
+    public Purchase(Customer customer, Instant creationDate) {
         this.customer = customer;
-        this.purchasedate = purchasedate;
+        this.creationDate = creationDate;
     }
 
-
-    public Set<Book> getBooks(){
-        return this.books;
+    // ------------- getters -------------
+    public List<Article> getArticles(){
+        return this.articles;
     }
 
     public Customer getCustomer() {
@@ -54,27 +59,35 @@ public class Purchase {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
-    public Instant getPurchasedate() {
-        return purchasedate;
+    public Instant getPurchaseCreationDate() {
+        return this.creationDate;
     }
 
+    public Instant getPurchaseValidationDate() {
+        return this.validationDate;
+    }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    // ------------- setters -------------
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    public void setPurchasedate(Instant purchasedate) {
-        this.purchasedate = purchasedate;
+    public void setPurchaseCreationDate(Instant creationDate) {
+        this.creationDate = creationDate;
     }
 
+    public void setPurchaseValidationDate(Instant validationDate) {
+        this.validationDate = validationDate;
+    }
 
+    // ------------- others -------------
     @Override
     public String toString(){
         return "::: Client :::"
